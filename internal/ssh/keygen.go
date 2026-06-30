@@ -26,13 +26,23 @@ func GenerateKey(keyType KeyType, outputPath, passphrase string) (*GeneratedKey,
 	if keyType == KeyTypeRSA {
 		args = append(args, "-b", "4096")
 	}
-	args = append(args, "-f", outputPath, "-N", passphrase, "-C", "ssh-wizard")
+	args = append(args, "-f", outputPath, "-N", "", "-C", "ssh-wizard")
 
 	cmd := exec.Command("ssh-keygen", args...)
 	var stderr bytes.Buffer
 	cmd.Stderr = &stderr
 	if err := cmd.Run(); err != nil {
 		return nil, fmt.Errorf("ssh-keygen failed: %w\n%s", err, stderr.String())
+	}
+
+	if passphrase != "" {
+		// TODO: Avoid command-line passphrase exposure with an expect/pty flow.
+		pCmd := exec.Command("ssh-keygen", "-p", "-f", outputPath, "-P", "", "-N", passphrase)
+		var pStderr bytes.Buffer
+		pCmd.Stderr = &pStderr
+		if err := pCmd.Run(); err != nil {
+			return nil, fmt.Errorf("ssh-keygen -p failed: %w\n%s", err, pStderr.String())
+		}
 	}
 
 	fingerprint, err := GetFingerprint(outputPath)
