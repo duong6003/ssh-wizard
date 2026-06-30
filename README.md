@@ -24,16 +24,33 @@ Nothing Design System aesthetic — monochrome, Space Mono, instrument-panel lab
 
 ## Requirements
 
-- `ssh` and `ssh-keygen` on PATH
-- Go 1.22+ (build only)
+- `ssh` and `ssh-keygen` on PATH (pre-installed on Linux, macOS, WSL, Git Bash)
 
 ## Install
+
+### Linux / macOS / WSL
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/duong6003/ssh-wizard/master/install.sh | sh
+```
+
+### Windows (PowerShell)
+
+```powershell
+irm https://raw.githubusercontent.com/duong6003/ssh-wizard/master/install.ps1 | iex
+```
+
+Installs to `%LOCALAPPDATA%\Programs\ssh-wizard` and adds it to PATH automatically.
+
+### Or download manually
+
+Grab the binary for your platform from [Releases](https://github.com/duong6003/ssh-wizard/releases).
+
+### With Go installed
 
 ```bash
 go install github.com/duong6003/ssh-wizard@latest
 ```
-
-Binary lands in `$GOPATH/bin/ssh-wizard` (make sure it's on PATH).
 
 ## Build from source
 
