@@ -18,8 +18,12 @@ func (m DoneModel) Init() tea.Cmd { return nil }
 
 func (m DoneModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if msg, ok := msg.(tea.KeyMsg); ok {
-		if msg.Type == tea.KeyEnter || msg.String() == "q" {
+		switch msg.String() {
+		case "enter", "q":
 			return m, tea.Quit
+		case "a", "A":
+			*m.state = *wizard.NewState()
+			return m, func() tea.Msg { return wizard.RestartMsg{} }
 		}
 	}
 	return m, nil

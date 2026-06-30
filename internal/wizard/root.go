@@ -62,6 +62,11 @@ func (m RootModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width, m.height = msg.Width, msg.Height
 	case AdvanceMsg:
 		return m.advance()
+	case RestartMsg:
+		m.step = StepWelcome
+		m.current = constructors.Welcome()
+		m.err = nil
+		return m, m.current.Init()
 	case ErrMsg:
 		m.err = msg.Err
 		return m, nil
