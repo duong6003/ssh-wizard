@@ -23,7 +23,6 @@ func init() {
 	})
 }
 
-func NewWelcome() tea.Model                    { return stub{"Welcome"} }
 func NewServerInfo(*wizard.State) tea.Model    { return stub{"Server Info"} }
 func NewAuth(*wizard.State) tea.Model          { return stub{"Auth"} }
 func NewKeyInstall(*wizard.State) tea.Model    { return stub{"Key Install"} }
