@@ -1,6 +1,6 @@
 package steps
 
-import "ssh-wizard/internal/wizard"
+import "github.com/duong6003/ssh-wizard/internal/wizard"
 
 func init() {
 	wizard.RegisterStepConstructors(wizard.StepConstructors{

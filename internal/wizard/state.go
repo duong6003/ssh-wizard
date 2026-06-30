@@ -1,6 +1,6 @@
 package wizard
 
-import ssh "ssh-wizard/internal/ssh"
+import ssh "github.com/duong6003/ssh-wizard/internal/ssh"
 
 type AuthMethod string
 

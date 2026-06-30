@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"ssh-wizard/internal/utils"
+	"github.com/duong6003/ssh-wizard/internal/utils"
 )
 
 type SSHConfigEntry struct {

@@ -7,9 +7,9 @@ import (
 	"github.com/charmbracelet/bubbles/spinner"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	gossh "ssh-wizard/internal/ssh"
-	"ssh-wizard/internal/ui"
-	"ssh-wizard/internal/wizard"
+	gossh "github.com/duong6003/ssh-wizard/internal/ssh"
+	"github.com/duong6003/ssh-wizard/internal/ui"
+	"github.com/duong6003/ssh-wizard/internal/wizard"
 )
 
 type installPhase int

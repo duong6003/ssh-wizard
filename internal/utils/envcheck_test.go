@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"ssh-wizard/internal/utils"
+	"github.com/duong6003/ssh-wizard/internal/utils"
 )
 
 func TestSupportsUnicodeTerminal(t *testing.T) {

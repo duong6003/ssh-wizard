@@ -26,7 +26,7 @@ func GenerateKey(keyType KeyType, outputPath, passphrase string) (*GeneratedKey,
 	if keyType == KeyTypeRSA {
 		args = append(args, "-b", "4096")
 	}
-	args = append(args, "-f", outputPath, "-N", "", "-C", "ssh-wizard")
+	args = append(args, "-f", outputPath, "-N", "", "-C", "github.com/duong6003/ssh-wizard")
 
 	cmd := exec.Command("ssh-keygen", args...)
 	var stderr bytes.Buffer

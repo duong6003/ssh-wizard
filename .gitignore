@@ -1,0 +1,20 @@
+# Build output
+*.exe
+*.exe~
+ssh-wizard
+
+# Go toolchain (local dev copy)
+.tools/
+.gocache/
+.gomodcache/
+
+# Claude / editor
+.agents/
+.claude/
+
+# Docs / design (not part of the distributed app)
+docs/
+
+# OS
+Thumbs.db
+.DS_Store

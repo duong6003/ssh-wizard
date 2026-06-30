@@ -4,10 +4,10 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
-	gossh "ssh-wizard/internal/ssh"
-	"ssh-wizard/internal/ui"
-	"ssh-wizard/internal/utils"
-	"ssh-wizard/internal/wizard"
+	gossh "github.com/duong6003/ssh-wizard/internal/ssh"
+	"github.com/duong6003/ssh-wizard/internal/ui"
+	"github.com/duong6003/ssh-wizard/internal/utils"
+	"github.com/duong6003/ssh-wizard/internal/wizard"
 )
 
 type configPhase int

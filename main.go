@@ -5,10 +5,10 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"ssh-wizard/internal/ui"
-	"ssh-wizard/internal/utils"
-	"ssh-wizard/internal/wizard"
-	_ "ssh-wizard/internal/wizard/steps"
+	"github.com/duong6003/ssh-wizard/internal/ui"
+	"github.com/duong6003/ssh-wizard/internal/utils"
+	"github.com/duong6003/ssh-wizard/internal/wizard"
+	_ "github.com/duong6003/ssh-wizard/internal/wizard/steps"
 )
 
 func main() {

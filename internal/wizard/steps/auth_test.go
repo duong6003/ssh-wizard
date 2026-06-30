@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"ssh-wizard/internal/ui"
+	"github.com/duong6003/ssh-wizard/internal/ui"
 )
 
 func TestAuthViewRendersStatusMessage(t *testing.T) {

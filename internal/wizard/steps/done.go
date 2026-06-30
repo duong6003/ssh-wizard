@@ -5,9 +5,9 @@ import (
 	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"ssh-wizard/internal/ui"
-	"ssh-wizard/internal/utils"
-	"ssh-wizard/internal/wizard"
+	"github.com/duong6003/ssh-wizard/internal/ui"
+	"github.com/duong6003/ssh-wizard/internal/utils"
+	"github.com/duong6003/ssh-wizard/internal/wizard"
 )
 
 type DoneModel struct{ state *wizard.State }
