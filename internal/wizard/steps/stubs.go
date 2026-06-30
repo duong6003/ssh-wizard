@@ -1,15 +1,6 @@
 package steps
 
-import (
-	tea "github.com/charmbracelet/bubbletea"
-	"ssh-wizard/internal/wizard"
-)
-
-type stub struct{ label string }
-
-func (s stub) Init() tea.Cmd                       { return nil }
-func (s stub) Update(tea.Msg) (tea.Model, tea.Cmd) { return s, nil }
-func (s stub) View() string                        { return "  " + s.label + "\n" }
+import "ssh-wizard/internal/wizard"
 
 func init() {
 	wizard.RegisterStepConstructors(wizard.StepConstructors{
@@ -22,6 +13,3 @@ func init() {
 		Done:          NewDone,
 	})
 }
-
-func NewConnTest(*wizard.State) tea.Model      { return stub{"Connection Test"} }
-func NewDone(*wizard.State) tea.Model          { return stub{"Done"} }
