@@ -50,6 +50,7 @@ type AuthModel struct {
 	validatedKey  *ssh.ValidatedKey
 	generated     *ssh.GeneratedKey
 	genErr        string
+	statusMsg     string
 }
 
 type keyValidatedMsg struct {
@@ -226,6 +227,7 @@ func (m AuthModel) handleKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 			defaultPath := utils.ExpandTilde("~/.ssh/id_ed25519")
 			key, err := ssh.ValidateKeyFile(defaultPath)
 			if err != nil {
+				m.statusMsg = "~/.ssh/id_ed25519 not found — generating a new key instead."
 				m.phase = authPhaseGenerate
 				m.genPhase = genPhaseType
 				return m, nil
@@ -247,6 +249,9 @@ func (m AuthModel) handleKey(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 func (m AuthModel) View() string {
 	var b strings.Builder
 	b.WriteString(ui.RenderHeader("AUTHENTICATION", 2, 7))
+	if m.statusMsg != "" {
+		b.WriteString("\n  " + ui.Warning.Render(ui.Sym.Warning+"  "+ui.NormalizeGlyphs(m.statusMsg)) + "\n")
+	}
 
 	switch m.phase {
 	case authPhaseChoosing:
