@@ -59,7 +59,8 @@ func RenderConfigBox(content string) string {
 	bottom := "  " + Sym.BottomLeft + strings.Repeat(Sym.Horizontal, width) + Sym.BottomRight
 	middle := make([]string, 0, len(lines))
 	for _, line := range lines {
-		middle = append(middle, fmt.Sprintf("  %s  %-*s  %s", Sym.Vertical, width-4, Secondary.Render(NormalizeGlyphs(line)), Sym.Vertical))
+		padded := fmt.Sprintf("%-*s", width-4, NormalizeGlyphs(line))
+		middle = append(middle, fmt.Sprintf("  %s  %s  %s", Sym.Vertical, Secondary.Render(padded), Sym.Vertical))
 	}
 	return strings.Join(append(append([]string{top}, middle...), bottom), "\n")
 }

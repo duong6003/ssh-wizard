@@ -1,6 +1,7 @@
 package ui_test
 
 import (
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -44,4 +45,16 @@ func TestASCIIFallbackSymbols(t *testing.T) {
 	box := ui.StripANSI(ui.RenderConfigBox("Host prod"))
 	assert.Contains(t, box, "+")
 	assert.NotContains(t, box, "╭")
+}
+
+func TestRenderConfigBoxPadsRawTextBeforeANSI(t *testing.T) {
+	ui.ConfigureTerminalSymbols(true)
+	box := ui.StripANSI(ui.RenderConfigBox("Host prod\nUser ubuntu"))
+	lines := strings.Split(box, "\n")
+
+	assert.Len(t, lines, 4)
+	width := len([]rune(lines[0]))
+	for _, line := range lines[1:] {
+		assert.Equal(t, width, len([]rune(line)))
+	}
 }
