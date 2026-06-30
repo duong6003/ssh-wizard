@@ -45,8 +45,12 @@ func ValidateKeyFile(path string) (*ValidatedKey, error) {
 }
 
 func detectKeyType(content string) KeyType {
-	lower := strings.ToLower(content)
-	if strings.Contains(lower, "rsa") || strings.Contains(content, "BEGIN RSA PRIVATE KEY") {
+	firstLine := content
+	if idx := strings.Index(content, "\n"); idx != -1 {
+		firstLine = content[:idx]
+	}
+	upper := strings.ToUpper(firstLine)
+	if strings.Contains(upper, "RSA") {
 		return KeyTypeRSA
 	}
 	return KeyTypeED25519
