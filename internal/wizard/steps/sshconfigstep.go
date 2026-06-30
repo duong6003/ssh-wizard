@@ -128,7 +128,7 @@ func (m SSHConfigStepModel) View() string {
 		b.WriteString(ui.RenderNavHint([]string{"↑↓ select", "⏎ confirm"}))
 
 	case configPhasePreview:
-		b.WriteString("\n  " + ui.Secondary.Render("Preview — entry to be written to ~/.ssh/config:") + "\n\n")
+		b.WriteString("\n  " + ui.Secondary.Render(ui.NormalizeGlyphs("Preview — entry to be written to ~/.ssh/config:")) + "\n\n")
 		b.WriteString(ui.RenderConfigBox(m.preview) + "\n")
 		if m.writeErr != "" {
 			b.WriteString("\n  " + ui.Error.Render(ui.Sym.Error+"  "+m.writeErr) + "\n")
@@ -136,7 +136,7 @@ func (m SSHConfigStepModel) View() string {
 		b.WriteString(ui.RenderNavHint([]string{"⏎ write to file", "Ctrl+C abort"}))
 
 	case configPhaseWriting:
-		b.WriteString("\n  " + ui.Secondary.Render("Writing to ~/.ssh/config ···") + "\n")
+		b.WriteString("\n  " + ui.Secondary.Render("Writing to ~/.ssh/config "+ui.Sym.Ellipsis) + "\n")
 
 	case configPhaseDone:
 		b.WriteString(ui.RenderConfirmedRow("WRITTEN TO", utils.GetSSHConfigPath()) + "\n")

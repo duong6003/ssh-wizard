@@ -90,7 +90,7 @@ func (m ConnTestModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m ConnTestModel) View() string {
 	var b strings.Builder
 	b.WriteString(ui.RenderHeader("CONNECTION TEST", 5, 7))
-	b.WriteString(fmt.Sprintf("\n  %s\n\n", ui.Secondary.Render("Testing ssh "+m.state.Server.Alias+" ···")))
+	b.WriteString(fmt.Sprintf("\n  %s\n\n", ui.Secondary.Render("Testing ssh "+m.state.Server.Alias+" "+ui.Sym.Ellipsis)))
 
 	for _, step := range m.steps {
 		duration := ""
@@ -101,7 +101,7 @@ func (m ConnTestModel) View() string {
 		case gossh.StatusDone:
 			b.WriteString(fmt.Sprintf("  %s  %-30s%s\n", ui.Success.Render(ui.Sym.Success), ui.Primary.Render(step.Name), duration))
 		case gossh.StatusRunning:
-			b.WriteString(fmt.Sprintf("  %s  %s\n", m.spinner.View(), ui.Primary.Render(step.Name+" ···")))
+			b.WriteString(fmt.Sprintf("  %s  %s\n", m.spinner.View(), ui.Primary.Render(step.Name+" "+ui.Sym.Ellipsis)))
 		case gossh.StatusError:
 			b.WriteString(fmt.Sprintf("  %s  %s\n", ui.Error.Render(ui.Sym.Error), ui.Error.Render(step.Name)))
 		default:

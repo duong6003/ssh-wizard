@@ -11,8 +11,8 @@ const labelWidth = 22
 
 func RenderProgress(currentStep, totalSteps int) string {
 	filled := (currentStep * totalSegments) / totalSteps
-	bar := Display.Render(strings.Repeat("▪", filled)) +
-		Secondary.Render(strings.Repeat("▫", totalSegments-filled))
+	bar := Display.Render(strings.Repeat(Sym.ProgressFull, filled)) +
+		Secondary.Render(strings.Repeat(Sym.ProgressEmpty, totalSegments-filled))
 	label := Secondary.Render(fmt.Sprintf("%d / %d", currentStep, totalSteps))
 	return fmt.Sprintf("  %s   %s", bar, label)
 }
@@ -31,11 +31,11 @@ func RenderHint(text string) string {
 }
 
 func RenderWarningBlock(title, body string) string {
-	div := Secondary.Render(strings.Repeat("─", 61))
+	div := Secondary.Render(strings.Repeat(Sym.Horizontal, 61))
 	icon := Warning.Render(Sym.Warning)
 	lines := make([]string, 0)
 	for _, line := range strings.Split(body, "\n") {
-		lines = append(lines, "     "+Primary.Render(line))
+		lines = append(lines, "     "+Primary.Render(NormalizeGlyphs(line)))
 	}
 	return strings.Join([]string{
 		div,
@@ -55,11 +55,11 @@ func RenderConfigBox(content string) string {
 		}
 	}
 	width += 4
-	top := "  ╭" + strings.Repeat("─", width) + "╮"
-	bottom := "  ╰" + strings.Repeat("─", width) + "╯"
+	top := "  " + Sym.TopLeft + strings.Repeat(Sym.Horizontal, width) + Sym.TopRight
+	bottom := "  " + Sym.BottomLeft + strings.Repeat(Sym.Horizontal, width) + Sym.BottomRight
 	middle := make([]string, 0, len(lines))
 	for _, line := range lines {
-		middle = append(middle, fmt.Sprintf("  │  %-*s  │", width-4, Secondary.Render(line)))
+		middle = append(middle, fmt.Sprintf("  %s  %-*s  %s", Sym.Vertical, width-4, Secondary.Render(NormalizeGlyphs(line)), Sym.Vertical))
 	}
 	return strings.Join(append(append([]string{top}, middle...), bottom), "\n")
 }

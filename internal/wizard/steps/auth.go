@@ -75,7 +75,7 @@ func NewAuth(state *wizard.State) tea.Model {
 
 	passphrase := textinput.New()
 	passphrase.EchoMode = textinput.EchoPassword
-	passphrase.EchoCharacter = '·'
+	passphrase.EchoCharacter = ui.Sym.PasswordEcho
 	passphrase.Placeholder = "leave blank to skip"
 
 	return AuthModel{
@@ -269,7 +269,7 @@ func (m AuthModel) View() string {
 		b.WriteString(ui.RenderConfirmedRow("METHOD", "Existing SSH key") + "\n")
 		b.WriteString("\n  " + ui.Label("private key path") + "\n")
 		if m.validating {
-			b.WriteString("  " + m.spinner.View() + " " + ui.Secondary.Render("Validating key…") + "\n")
+			b.WriteString("  " + m.spinner.View() + " " + ui.Secondary.Render("Validating key"+ui.Sym.Ellipsis) + "\n")
 		} else {
 			b.WriteString("  " + m.keyPathInput.View() + "\n")
 			if m.keyPathErr != "" {
@@ -335,6 +335,6 @@ func (m AuthModel) viewGenerate(b *strings.Builder) {
 
 	case genPhaseGenerating:
 		b.WriteString(ui.RenderConfirmedRow("KEY TYPE", string(m.genKeyType)) + "\n")
-		b.WriteString("\n  " + m.spinner.View() + " " + ui.Secondary.Render("Generating key…") + "\n")
+		b.WriteString("\n  " + m.spinner.View() + " " + ui.Secondary.Render("Generating key"+ui.Sym.Ellipsis) + "\n")
 	}
 }

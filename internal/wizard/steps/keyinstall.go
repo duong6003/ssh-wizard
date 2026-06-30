@@ -45,7 +45,7 @@ func NewKeyInstall(state *wizard.State) tea.Model {
 
 	p := textinput.New()
 	p.EchoMode = textinput.EchoPassword
-	p.EchoCharacter = '·'
+	p.EchoCharacter = ui.Sym.PasswordEcho
 
 	m := KeyInstallModel{
 		state:     state,
@@ -179,7 +179,7 @@ func (m KeyInstallModel) View() string {
 	}
 
 	b.WriteString(fmt.Sprintf("\n  %s\n\n",
-		ui.Secondary.Render("Installing your public key on "+m.state.Server.Username+"@"+m.state.Server.Hostname+" ···"),
+		ui.Secondary.Render("Installing your public key on "+m.state.Server.Username+"@"+m.state.Server.Hostname+" "+ui.Sym.Ellipsis),
 	))
 
 	for _, step := range m.steps {

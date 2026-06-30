@@ -8,6 +8,7 @@ import (
 )
 
 func TestRenderProgress(t *testing.T) {
+	ui.ConfigureTerminalSymbols(true)
 	result := ui.StripANSI(ui.RenderProgress(1, 7))
 	assert.Contains(t, result, "▪▪▫▫▫▫▫▫▫▫▫▫▫▫")
 	assert.Contains(t, result, "1 / 7")
@@ -17,6 +18,7 @@ func TestRenderProgress(t *testing.T) {
 }
 
 func TestRenderConfirmedRow(t *testing.T) {
+	ui.ConfigureTerminalSymbols(true)
 	result := ui.StripANSI(ui.RenderConfirmedRow("HOST ALIAS", "my-server"))
 	assert.Contains(t, result, "✓")
 	assert.Contains(t, result, "HOST ALIAS")
@@ -24,8 +26,22 @@ func TestRenderConfirmedRow(t *testing.T) {
 }
 
 func TestRenderWarningBlock(t *testing.T) {
+	ui.ConfigureTerminalSymbols(true)
 	result := ui.StripANSI(ui.RenderWarningBlock("file exists", "please check"))
 	assert.Contains(t, result, "⚠")
 	assert.Contains(t, result, "file exists")
 	assert.Contains(t, result, "please check")
+}
+
+func TestASCIIFallbackSymbols(t *testing.T) {
+	ui.ConfigureTerminalSymbols(false)
+	t.Cleanup(func() { ui.ConfigureTerminalSymbols(true) })
+
+	progress := ui.StripANSI(ui.RenderProgress(1, 7))
+	assert.Contains(t, progress, "##------------")
+	row := ui.StripANSI(ui.RenderConfirmedRow("status", "ready"))
+	assert.Contains(t, row, "OK")
+	box := ui.StripANSI(ui.RenderConfigBox("Host prod"))
+	assert.Contains(t, box, "+")
+	assert.NotContains(t, box, "╭")
 }

@@ -43,7 +43,7 @@ func (m DoneModel) View() string {
 	b.WriteString("  " + ui.Secondary.Render("Connect in terminal:") + "\n\n")
 	b.WriteString("    " + ui.Interactive.Render("ssh "+m.state.Server.Alias) + "\n\n")
 	b.WriteString("  " + ui.Secondary.Render("Connect in VS Code:") + "\n\n")
-	b.WriteString("    " + ui.Secondary.Render("Cmd+Shift+P") + " → " + ui.Interactive.Render("Remote-SSH: Connect to Host") + " → " + ui.Interactive.Render(m.state.Server.Alias) + "\n")
+	b.WriteString("    " + ui.Secondary.Render("Cmd+Shift+P") + " " + ui.Sym.Arrow + " " + ui.Interactive.Render("Remote-SSH: Connect to Host") + " " + ui.Sym.Arrow + " " + ui.Interactive.Render(m.state.Server.Alias) + "\n")
 	b.WriteString(ui.RenderNavHint([]string{"⏎ exit", "A add another server"}))
 	return b.String()
 }

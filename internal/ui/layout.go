@@ -5,7 +5,9 @@ import (
 	"strings"
 )
 
-var dividerLine = Secondary.Render(strings.Repeat("─", 61))
+func dividerLine() string {
+	return Secondary.Render(strings.Repeat(Sym.Horizontal, 61))
+}
 
 func RenderHeader(title string, step, total int) string {
 	progress := RenderProgress(step, total)
@@ -16,13 +18,13 @@ func RenderHeader(title string, step, total int) string {
 		"",
 		"",
 		titleLine,
-		"  " + dividerLine,
+		"  " + dividerLine(),
 		"",
 	}, "\n")
 }
 
 func RenderDivider() string {
-	return "\n  " + dividerLine + "\n"
+	return "\n  " + dividerLine() + "\n"
 }
 
 func RenderKeyValue(labelText, value string) string {
@@ -31,5 +33,9 @@ func RenderKeyValue(labelText, value string) string {
 }
 
 func RenderNavHint(hints []string) string {
-	return "\n  " + dividerLine + "\n  " + Secondary.Render(strings.Join(hints, "   ")) + "\n"
+	normalized := make([]string, len(hints))
+	for i, hint := range hints {
+		normalized[i] = NormalizeGlyphs(hint)
+	}
+	return "\n  " + dividerLine() + "\n  " + Secondary.Render(strings.Join(normalized, "   ")) + "\n"
 }
