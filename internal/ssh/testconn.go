@@ -40,17 +40,18 @@ func TestConnection(alias string, onUpdate func([]ConnStep)) ConnTestResult {
 		{Name: "Authentication", Status: StatusPending},
 		{Name: "Session established", Status: StatusPending},
 	}
+	start := time.Now()
+	startMs := start.UnixMilli()
 
 	update := func(i int, status ConnStepStatus, detail string) {
 		steps[i].Status = status
 		steps[i].Detail = detail
-		steps[i].DurationMs = time.Now().UnixMilli()
+		steps[i].DurationMs = time.Now().UnixMilli() - startMs
 		cp := make([]ConnStep, len(steps))
 		copy(cp, steps)
 		onUpdate(cp)
 	}
 
-	start := time.Now()
 	update(0, StatusRunning, "")
 
 	args := []string{
