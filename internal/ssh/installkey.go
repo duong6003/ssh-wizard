@@ -2,6 +2,7 @@ package ssh
 
 import (
 	"fmt"
+	"net"
 	"os"
 	"strings"
 	"time"
@@ -21,13 +22,14 @@ const (
 )
 
 type InstallKeyOptions struct {
-	Hostname       string
-	Port           int
-	Username       string
-	Password       string
-	PrivateKeyPath string
-	Passphrase     string
-	PublicKeyPath  string
+	Hostname          string
+	Port              int
+	Username          string
+	Password          string
+	PrivateKeyPath    string
+	Passphrase        string
+	PublicKeyPath     string
+	ServerFingerprint string
 }
 
 type InstallKeyError struct {
@@ -40,7 +42,7 @@ func (e *InstallKeyError) Error() string {
 	return fmt.Sprintf("[%s] %s: %v", e.Step, e.Message, e.Cause)
 }
 
-func InstallPublicKey(opts InstallKeyOptions, onStep func(InstallStep)) error {
+func InstallPublicKey(opts *InstallKeyOptions, onStep func(InstallStep)) error {
 	onStep(InstallStepConnecting)
 
 	pubKeyData, err := os.ReadFile(opts.PublicKeyPath)
@@ -69,10 +71,13 @@ func InstallPublicKey(opts InstallKeyOptions, onStep func(InstallStep)) error {
 	}
 
 	cfg := &gossh.ClientConfig{
-		User:            opts.Username,
-		Auth:            authMethods,
-		HostKeyCallback: gossh.InsecureIgnoreHostKey(),
-		Timeout:         10 * time.Second,
+		User: opts.Username,
+		Auth: authMethods,
+		HostKeyCallback: func(hostname string, remote net.Addr, key gossh.PublicKey) error {
+			opts.ServerFingerprint = gossh.FingerprintSHA256(key)
+			return nil
+		},
+		Timeout: 10 * time.Second,
 	}
 
 	addr := fmt.Sprintf("%s:%d", opts.Hostname, opts.Port)

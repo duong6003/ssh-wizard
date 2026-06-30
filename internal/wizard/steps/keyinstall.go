@@ -94,7 +94,7 @@ func (m KeyInstallModel) startInstall(password string) tea.Cmd {
 			PrivateKeyPath: state.Key.PrivateKeyPath,
 			PublicKeyPath:  state.Key.PublicKeyPath,
 		}
-		err := gossh.InstallPublicKey(opts, func(step gossh.InstallStep) {})
+		err := gossh.InstallPublicKey(&opts, func(step gossh.InstallStep) {})
 		if err != nil {
 			if installErr, ok := err.(*gossh.InstallKeyError); ok {
 				return installErrMsg{installErr}
