@@ -2,6 +2,10 @@ package wizard
 
 import tea "github.com/charmbracelet/bubbletea"
 
+var Version = "dev"
+
+func SetVersion(v string) { Version = v }
+
 type Step int
 
 const (

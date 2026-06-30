@@ -30,7 +30,7 @@ func (m WelcomeModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 func (m WelcomeModel) View() string {
 	var b strings.Builder
 	b.WriteString("\n\n")
-	b.WriteString("  " + ui.Display.Render("github.com/duong6003/ssh-wizard") + "\n\n\n")
+	b.WriteString("  " + ui.Display.Render("ssh-wizard") + "  " + ui.Secondary.Render(wizard.Version) + "\n\n\n")
 	b.WriteString("  " + ui.Primary.Render("Set up VS Code Remote SSH in under 5 minutes.") + "\n\n")
 	b.WriteString("  " + ui.Primary.Render("This wizard will:") + "\n\n")
 	for _, item := range []string{

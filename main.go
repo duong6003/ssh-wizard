@@ -11,9 +11,12 @@ import (
 	_ "github.com/duong6003/ssh-wizard/internal/wizard/steps"
 )
 
+var version = "dev"
+
 func main() {
 	env := utils.CheckEnvironment()
 	ui.ConfigureTerminalSymbols(env.SupportsUnicode)
+	wizard.SetVersion(version)
 
 	p := tea.NewProgram(wizard.NewRootModel(), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
