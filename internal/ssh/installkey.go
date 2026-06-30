@@ -108,7 +108,10 @@ func InstallPublicKey(opts *InstallKeyOptions, onStep func(InstallStep)) error {
 	}
 
 	onStep(InstallStepInstallingKey)
-	checkSess, _ := client.NewSession()
+	checkSess, err := client.NewSession()
+	if err != nil {
+		return &InstallKeyError{Step: InstallStepInstallingKey, Message: "failed to open check session", Cause: err}
+	}
 	var existingOut strings.Builder
 	checkSess.Stdout = &existingOut
 	checkSess.Run("cat ~/.ssh/authorized_keys 2>/dev/null || true")
@@ -123,7 +126,10 @@ func InstallPublicKey(opts *InstallKeyOptions, onStep func(InstallStep)) error {
 	}
 
 	onStep(InstallStepVerifying)
-	verifySess, _ := client.NewSession()
+	verifySess, err := client.NewSession()
+	if err != nil {
+		return &InstallKeyError{Step: InstallStepVerifying, Message: "failed to open verify session", Cause: err}
+	}
 	var verifyOut strings.Builder
 	verifySess.Stdout = &verifyOut
 	verifySess.Run("cat ~/.ssh/authorized_keys")
