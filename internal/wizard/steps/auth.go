@@ -132,7 +132,21 @@ func (m AuthModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, func() tea.Msg { return wizard.AdvanceMsg{} }
 
 	case tea.KeyMsg:
-		return m.handleKey(msg)
+		// Forward key to active textinput first so typed chars land,
+		// then run wizard logic (which reads .Value() for Enter handling).
+		var cmd1, cmd2, cmd3 tea.Cmd
+		m.keyPathInput, cmd1 = m.keyPathInput.Update(msg)
+		m.genPathInput, cmd2 = m.genPathInput.Update(msg)
+		m.genPassInput, cmd3 = m.genPassInput.Update(msg)
+		next, logicCmd := m.handleKey(msg)
+		if am, ok := next.(AuthModel); ok {
+			// Preserve updated textinputs — handleKey runs on pre-update copy.
+			am.keyPathInput = m.keyPathInput
+			am.genPathInput = m.genPathInput
+			am.genPassInput = m.genPassInput
+			return am, tea.Batch(cmd1, cmd2, cmd3, logicCmd)
+		}
+		return next, tea.Batch(cmd1, cmd2, cmd3, logicCmd)
 	}
 
 	var spinCmd tea.Cmd
