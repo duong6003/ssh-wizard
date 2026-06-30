@@ -31,12 +31,13 @@ func ParseSSHConfig(content string) []SSHConfigEntry {
 		if line == "" || strings.HasPrefix(line, "#") {
 			continue
 		}
-		parts := strings.SplitN(line, " ", 2)
-		if len(parts) < 2 {
+		var key, value string
+		if idx := strings.IndexAny(line, " ="); idx != -1 {
+			key = strings.ToLower(strings.TrimSpace(line[:idx]))
+			value = strings.TrimSpace(strings.TrimLeft(line[idx:], " ="))
+		} else {
 			continue
 		}
-		key := strings.ToLower(parts[0])
-		value := strings.TrimSpace(parts[1])
 
 		if key == "host" {
 			if current != nil {

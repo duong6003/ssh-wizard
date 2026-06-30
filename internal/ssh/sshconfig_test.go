@@ -64,3 +64,20 @@ func TestAppendEntry(t *testing.T) {
 	newIdx := strings.Index(result, "Host new")
 	assert.Greater(t, newIdx, oldIdx)
 }
+
+func TestParseSSHConfigKeyValueFormats(t *testing.T) {
+	entries := ssh.ParseSSHConfig(`
+Host=prod
+  HostName = 192.168.1.1
+  User=ubuntu
+  Port = 2222
+  IdentityFile=~/.ssh/id_ed25519_prod
+`)
+
+	assert.Len(t, entries, 1)
+	assert.Equal(t, "prod", entries[0].Host)
+	assert.Equal(t, "192.168.1.1", entries[0].Hostname)
+	assert.Equal(t, "ubuntu", entries[0].User)
+	assert.Equal(t, 2222, entries[0].Port)
+	assert.Equal(t, "~/.ssh/id_ed25519_prod", entries[0].IdentityFile)
+}
