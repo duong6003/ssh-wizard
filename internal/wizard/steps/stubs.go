@@ -23,7 +23,6 @@ func init() {
 	})
 }
 
-func NewAuth(*wizard.State) tea.Model          { return stub{"Auth"} }
 func NewKeyInstall(*wizard.State) tea.Model    { return stub{"Key Install"} }
 func NewSSHConfigStep(*wizard.State) tea.Model { return stub{"SSH Config"} }
 func NewConnTest(*wizard.State) tea.Model      { return stub{"Connection Test"} }
